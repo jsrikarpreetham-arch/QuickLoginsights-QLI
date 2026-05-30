@@ -188,10 +188,3 @@ ORDER BY idx_scan DESC;
 ```
 
 ## Summary
-
-The backend is optimized for:
-- ✅ 1000+ concurrent log ingestion
-- ✅ Fast retrieval and filtering
-- ✅ Anomaly detection on large datasets
-- ✅ AI-powered analysis
-- ✅ Horizontal scalability
