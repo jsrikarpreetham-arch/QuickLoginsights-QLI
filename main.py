@@ -5,6 +5,8 @@ from fastapi import FastAPI
 from ingestion.api import app as ingestion_app
 from ingestion.batcher import batcher
 from db.client import close_pool
+from alerts.router import router as alerts_router
+app.include_router(alerts_router)
 
 
 @asynccontextmanager
