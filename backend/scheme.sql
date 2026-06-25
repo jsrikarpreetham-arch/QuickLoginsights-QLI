@@ -373,3 +373,22 @@ CREATE TABLE IF NOT EXISTS llm_analyses (
 
     created_at    TIMESTAMPTZ DEFAULT NOW()
 );
+--- =============================================
+--  TABLE: alerts
+--  =============================================
+CREATE TYPE alert_severity_enum AS ENUM ('LOW', 'MEDIUM', 'HIGH', 'CRITICAL');
+
+CREATE TABLE alerts (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    incident_id UUID NOT NULL REFERENCES incidents(id) ON DELETE CASCADE,
+    severity alert_severity_enum NOT NULL DEFAULT 'MEDIUM',
+    title VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    acknowledged BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    acknowledged_at TIMESTAMPTZ
+);
+
+CREATE INDEX ix_alerts_incident_created ON alerts (incident_id, created_at);
+CREATE INDEX ix_alerts_severity ON alerts (severity);
+CREATE INDEX ix_alerts_acknowledged ON alerts (acknowledged);
